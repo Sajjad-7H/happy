@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abid Sakib's Birthday Celebration</title>
+    <style>
+        /* --- Visitor Counter Style --- */
+        .visitor-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #ff4d6d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border: 1px solid #ff4d6d;
+            font-size: 0.9rem;
+        }
+
+        /* General Design */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: radial-gradient(circle, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Container */
+        .container {
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            animation: bounceIn 1.5s ease-out;
+            max-width: 80%;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.1) translateY(100vh); opacity: 0; }
+            60% { transform: scale(1.1) translateY(-10px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); }
+        }
+
+        h1 { color: #ff4d6d; font-size: 3.5rem; margin-bottom: 5px; text-shadow: 2px 2px #fff; }
+
+        .name-display {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #ff4d6d, #ffae00, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; 
+        }
+
+        p { font-size: 1.4rem; color: #555; margin: 5px 0; }
+
+        /* Falling Picture */
+        .falling-picture {
+            position: absolute;
+            width: 100px; height: 100px;
+            background-size: cover; background-position: center;
+            top: -120px; z-index: 1; border-radius: 50%;
+            border: 5px solid white; animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-120px) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        /* Buttons */
+        .start-btn {
+            margin-top: 30px; padding: 15px 30px; font-size: 1.2rem;
+            background-color: #ff4d6d; color: white; border: none;
+            border-radius: 30px; cursor: pointer; font-weight: bold;
+        }
+
+        /* Treat Section */
+        #treat-section { display: none; margin-top: 15px; animation: fadeIn 1s ease; }
+        .arrow { font-size: 2rem; color: #ff4d6d; display: block; animation: bounce 1s infinite; }
+        .treat-btn {
+            background-color: #9c27b0; color: white; padding: 10px 25px;
+            border: none; border-radius: 20px; font-weight: bold; cursor: pointer;
+        }
+
+        /* --- Custom Message Box (Modal) --- */
+        .modal {
+            display: none; position: fixed; z-index: 100;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center; align-items: center;
+        }
+
+        .modal-content {
+            background: white; padding: 30px; border-radius: 20px;
+            max-width: 400px; text-align: center; position: relative;
+            animation: popUp 0.4s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 { color: #9c27b0; margin-top: 0; }
+        .modal-content p { color: #333; font-size: 1.2rem; margin-bottom: 20px; }
+        .close-btn {
+            background: #ff4d6d; color: white; border: none;
+            padding: 8px 20px; border-radius: 15px; cursor: pointer;
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div class="visitor-counter">
+        <span id="count">0</span>
+    </div>
+
+    <audio id="bdayMusic" loop>
+        <source src="nastelbom-happy-birthday-471481.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1>Happy Birthday</h1>
+        <div class="name-display">Abid Sakib</div>
+        <p>"Happy Birthday, Abid Sakib! 🌟 Dream big,</p>
+        <p>shine bright, and enjoy every bit of your </p>
+        <p>amazing journey ahead."</p>
+        
+        <button class="start-btn" onclick="startCelebration()">Uthsob Shuru Koro!</button>
+
+        <div id="treat-section">
+            <span class="arrow">↓</span>
+            <button class="treat-btn" onclick="openModal()">Click for Surprise!</button>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <h2>Hey Abid! 🎉</h2>
+            <p>Treat jate dite deri na hoy!😁</p>
+            <button class="close-btn" onclick="closeModal()">Ar Dibo!</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Visitor Counter Logic ---
+        function updateCounter() {
+            let count = localStorage.getItem('visitorCount');
+            if (count === null) {
+                count = 1;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('count').innerText = count;
+        }
+        
+        // Run counter on page load
+        updateCounter();
+
+        const pictures = [
+            'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg',
+            'image6.jpg', 'image7.jpg', 'image8.jpg', 'image9.jpg', 'image10.jpg',
+            'image11.jpg', 'image12.jpg', 'image13.jpg', 'image14.jpg', 'image15.jpg',
+            'image16.jpg', 'image17.jpg'
+        ];
+
+        let celebrationStarted = false;
+
+        function startCelebration() {
+            if (celebrationStarted) return;
+            celebrationStarted = true;
+            document.getElementById('bdayMusic').play().catch(e => console.log(e));
+            document.querySelector('.start-btn').textContent = "Celebration Cholche!";
+            document.getElementById('treat-section').style.display = 'block';
+            setInterval(createFallingPicture, 150); 
+        }
+
+        function openModal() { document.getElementById('messageModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('messageModal').style.display = 'none'; }
+
+        function createFallingPicture() {
+            const picture = document.createElement('div');
+            picture.classList.add('falling-picture');
+            const randomIndex = Math.floor(Math.random() * pictures.length);
+            picture.style.backgroundImage = `url(${pictures[randomIndex]})`;
+            picture.style.left = Math.random() * 95 + 'vw';
+            const duration = Math.random() * 4 + 3; 
+            picture.style.animationDuration = duration + 's';
+            document.body.appendChild(picture);
+            setTimeout(() => { picture.remove(); }, duration * 1000); 
+        }
+    </script>
+</body>
+</html>
